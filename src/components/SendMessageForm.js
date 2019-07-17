@@ -19,12 +19,21 @@ export default class SendMessageForm extends Component {
 		e.preventDefault();
 		console.log(this.state.message);
 		this.props.sendMessage(this.state.message);
+		this.setState({
+			message: ''
+		})
 	}
 
 	render() {
 		return (
 			<form className='send-message-form'  onSubmit={this.handleSubmit} >
-				<input placeholder="text" type="text" name="massage" onChange={this.handleChange} />
+				<input 
+				disabled={this.props.disabled} 
+				value={this.state.message} 
+				placeholder="text" 
+				type="text" 
+				name="massage" 
+				onChange={this.handleChange} />
 			</form>
 		);
 	}

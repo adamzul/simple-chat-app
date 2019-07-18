@@ -1,10 +1,16 @@
 import React from 'react';
+import {Provider, connect} from 'react-redux';
+
 import Chatkit from '@pusher/chatkit-client';
 import {tokenUrl, instanceLocator} from './config';
+import store from './store';
+// import mapUserDispatchToProps from './mappers/mapUserDispatchToProps';
+
 import MessageList from './components/MessageList';
 import RoomList from './components/RoomList';
 import SendMessageForm from './components/SendMessageForm';
 import NewRoomForm from './components/NewRoomForm';
+import Init from './components/Init';
 import logo from './logo.svg';
 import './App.css';
 
@@ -24,24 +30,25 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    const chatManager = new Chatkit.ChatManager({
-      instanceLocator,
-      userId: 'adam',
-      tokenProvider: new Chatkit.TokenProvider({
-        url: tokenUrl
-      })
-    });
+    // const chatManager = new Chatkit.ChatManager({
+    //   instanceLocator,
+    //   userId: 'anon',
+    //   tokenProvider: new Chatkit.TokenProvider({
+    //     url: tokenUrl
+    //   })
+    // });
 
-    chatManager.connect()
-    .then(currentUser => {
-      this.currentUser = currentUser;
+    // chatManager.connect()
+    // .then(currentUser => {
+    //   this.currentUser = currentUser;
 
-      this.getRooms();
+    //   this.getRooms();
       
-      // this.subscribeToRoom();
+    //   // this.subscribeToRoom();
       
 
-    });
+    // });
+
   }
 
   getRooms(){
@@ -93,17 +100,21 @@ class App extends React.Component {
 
   render(){
     return (
+      <Provider store={store}>
       <div className="app">
-        <RoomList 
+        <Init />
+        {/*<RoomList 
         roomId={this.state.roomId}
         subscribeToRoom={this.subscribeToRoom}
         rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} />
         <NewRoomForm createRoom={this.createRoom} />
         <MessageList roomId={this.state.roomId} message={this.state.messages} />
         <SendMessageForm disabled={!this.state.roomId} sendMessage={this.sendMessage} />
+      */}
       </div>
+      </Provider>
     );
   }
 }
 
-export default App;
+export default (App);

@@ -1,9 +1,10 @@
 import Chatkit from '@pusher/chatkit-client';
 import {tokenUrl, instanceLocator} from '../config';
 import {GET_CURRENT_USER} from './types';
+import {getRooms} from './roomAction';
 
 export function	getCurrentUser(){
-	return function(dispatch){
+	return function(dispatch, getState){
 		const chatManager = new Chatkit.ChatManager({
 	    instanceLocator,
 	    userId: 'anon',
@@ -20,8 +21,13 @@ export function	getCurrentUser(){
 	    return dispatch({
 				type: GET_CURRENT_USER,
 	    	currentUser: currentUser
-	    });
+	    })
+	    ;
 	  });
+	  return state;
+	  // .then(() => {dispatch(getRooms())})
+
+	  ;
 
 	}
 }

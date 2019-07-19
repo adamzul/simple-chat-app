@@ -1,25 +1,24 @@
-import {FETCH_ROOMS, NEW_ROOM} from './types';
+import {GET_ROOMS, POST_ROOM, SUBSCRIBE_ROOM} from '../actions/types';
 
 const initialState = {
-	rooms: []
+	joinableRooms: [],
+	joinedRooms: []
 }
 
-export function(state = initialState, action){
+export default function(state = initialState, action){
 	switch(action.type){
-		case FETCH_ROOMS:
-			this.currentUser.getJoinableRooms()
-		    .then(joinableRooms => {
-		      this.setState({
-		        joinableRooms,
-		        joinedRooms: this.currentUser.rooms
-		      })
-		    })
-		    .catch(err => console(err));
+		case GET_ROOMS:
 			state = {
-				rooms: action.rooms
-			};
+				joinableRooms: action.joinableRooms,
+        		joinedRooms: action.joinedRooms
+			}
 			return state;
-		case NEW_ROOM:
+		case SUBSCRIBE_ROOM:
+			state = {
+
+			}
+			return state;
+		case POST_ROOM:
 			return state;
 		default:
 			return state;

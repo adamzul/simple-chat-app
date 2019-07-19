@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import roomAction from '../actions/roomAction';
+import {getMessages, cleanMessage} from '../actions/messageAction';
 
-export default class RoomList extends Component {
+class RoomList extends Component {
 
 	render() {
 		const orderedRooms = [...this.props.rooms].sort((a, b) => a.id-b.id);
@@ -12,7 +15,10 @@ export default class RoomList extends Component {
 						const active = this.props.roomId === room.id ? "active" : "";
 						return (
 							<li key={room.id} className={"room " + active}>
-								<a onClick={() => this.props.subscribeToRoom(room.id)} href="#"> # {room.name}</a>
+								<a onClick={() => {
+									// this.props.cleanMessage();
+									this.props.getMessages(room.id);
+								}} href="#"> # {room.name}</a>
 							</li>
 						)
 					})}
@@ -21,3 +27,9 @@ export default class RoomList extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	rooms: [...state.room.joinableRooms, ...state.room.joinedRooms]
+})
+
+export default connect(mapStateToProps, {getMessages, cleanMessage})(RoomList);

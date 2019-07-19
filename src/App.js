@@ -24,8 +24,8 @@ class App extends React.Component {
       joinedRooms: []
     };
     this.sendMessage = this.sendMessage.bind(this);
-    this.subscribeToRoom = this.subscribeToRoom.bind(this);
-    this.getRooms = this.getRooms.bind(this);
+    // this.subscribeToRoom = this.subscribeToRoom.bind(this);
+    // this.getRooms = this.getRooms.bind(this);
     this.createRoom = this.createRoom.bind(this);
   }
 
@@ -51,37 +51,37 @@ class App extends React.Component {
 
   }
 
-  getRooms(){
-    this.currentUser.getJoinableRooms()
-    .then(joinableRooms => {
-      this.setState({
-        joinableRooms,
-        joinedRooms: this.currentUser.rooms
-      })
-    })
-    .catch(err => console(err));
-  }
+  // getRooms(){
+  //   this.currentUser.getJoinableRooms()
+  //   .then(joinableRooms => {
+  //     this.setState({
+  //       joinableRooms,
+  //       joinedRooms: this.currentUser.rooms
+  //     })
+  //   })
+  //   .catch(err => console(err));
+  // }
 
-  subscribeToRoom(roomId){
-    this.setState({messages: []});
-    this.currentUser.subscribeToRoom({
-      roomId: roomId,
-      // messageLimit: 10,
-      hooks: {
-        onMessage: message => {
-          console.log('message.text: ', message.text);
-          this.setState({
-            messages: [...this.state.messages, message]
-          })
-        }
-      }
-    })
-    .then(room => {
-      this.setState({roomId: room.id});
-      this.getRooms();
-    })
-    .catch(err => console(err));
-  }
+  // subscribeToRoom(roomId){
+  //   this.setState({messages: []});
+  //   this.currentUser.subscribeToRoom({
+  //     roomId: roomId,
+  //     // messageLimit: 10,
+  //     hooks: {
+  //       onMessage: message => {
+  //         console.log('message.text: ', message.text);
+  //         this.setState({
+  //           messages: [...this.state.messages, message]
+  //         })
+  //       }
+  //     }
+  //   })
+  //   .then(room => {
+  //     this.setState({roomId: room.id});
+  //     this.getRooms();
+  //   })
+  //   .catch(err => console(err));
+  // }
 
   sendMessage(text){
     this.currentUser.sendMessage({
@@ -103,12 +103,11 @@ class App extends React.Component {
       <Provider store={store}>
       <div className="app">
         <Init />
-        {/*<RoomList 
-        roomId={this.state.roomId}
-        subscribeToRoom={this.subscribeToRoom}
-        rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} />
+          <RoomList />
+          <MessageList />
+
+        {/*
         <NewRoomForm createRoom={this.createRoom} />
-        <MessageList roomId={this.state.roomId} message={this.state.messages} />
         <SendMessageForm disabled={!this.state.roomId} sendMessage={this.sendMessage} />
       */}
       </div>

@@ -16,7 +16,7 @@ class RoomList extends Component {
 						return (
 							<li key={room.id} className={"room " + active}>
 								<a onClick={() => {
-									// this.props.cleanMessage();
+									this.props.cleanMessage();
 									this.props.getMessages(room.id);
 								}} href="#"> # {room.name}</a>
 							</li>

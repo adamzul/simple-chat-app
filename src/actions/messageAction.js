@@ -1,4 +1,4 @@
-import {GET_MESSAGES, NEW_MESSAGE, CLEAN_MESSAGE} from './types';
+import {GET_MESSAGES, SEND_MESSAGE, CLEAN_MESSAGE, SET_CURRENT_ROOM_ID} from './types';
 
 export function getMessages(roomId){
 	// console.log('tes')
@@ -8,45 +8,48 @@ export function getMessages(roomId){
     let temp = [];
     return currentUser.subscribeToRoom({
       roomId: roomId,
-      // messageLimit: 10,
       hooks: {
         onMessage: message => {
-        	console.log(1);
-          // console.log('message.text: ', message.text);
-          temp = [...temp, message];
-          // this.setState({
-          //   messages: [...this.state.messages, message]
-          // })
+          dispatch({
+            type: GET_MESSAGES,
+            payload: {
+              messages: [...getState().message.messages, message]
+            }
+          });
         }
       }
     })
     .then(room => {
-      console.log(2)
-
-      return dispatch({
-        type: GET_MESSAGES,
+      dispatch({
+        type: SET_CURRENT_ROOM_ID,
         payload: {
-          messages: [...temp]
+          currentRoomId: roomId
         }
-      });
-      // this.setState({roomId: room.id});
-      // this.getRooms();
+      })
     })
     .catch(err => console(err));
   }
 }
 
 export function cleanMessage(){
-	return function(dispatch, setState){
+	return function(dispatch, getState){
 		return dispatch({
 			type: CLEAN_MESSAGE
 		})
 	}
 }
 
-function sendMessage(text){
-	this.currentUser.sendMessage({
-    text,
-    roomId: this.state.roomId
-  });
+export function sendMessage(text){
+  return function(dispatch, getState){
+    return getState().user.currentUser.sendMessage({
+      text
+    });
+    return dispatch({
+      type: SEND_MESSAGE,
+      // payload: {
+      //   text
+      // }
+    })
+  }
+	
 }

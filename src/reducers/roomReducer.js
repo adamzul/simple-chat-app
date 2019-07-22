@@ -1,8 +1,9 @@
-import {GET_ROOMS, POST_ROOM, SUBSCRIBE_ROOM} from '../actions/types';
+import {GET_ROOMS, POST_ROOM, SUBSCRIBE_ROOM, SET_CURRENT_ROOM_ID} from '../actions/types';
 
 const initialState = {
 	joinableRooms: [],
-	joinedRooms: []
+	joinedRooms: [],
+	currentRoomId: ''
 }
 
 export default function(state = initialState, action){
@@ -20,6 +21,12 @@ export default function(state = initialState, action){
 			return state;
 		case POST_ROOM:
 			return state;
+		case SET_CURRENT_ROOM_ID:
+			console.log(action.payload.roomId)
+			state = {
+				...state,
+				currentRoomId: action.payload.roomId
+			}
 		default:
 			return state;
 	}

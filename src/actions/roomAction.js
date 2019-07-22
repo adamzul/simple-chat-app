@@ -17,6 +17,7 @@ export function getRooms(){
   }
 }
 
+
 // export function subscribeRoom(roomId){
 //   return function(dispatch, getState){
 //     // this.setState({messages: []});

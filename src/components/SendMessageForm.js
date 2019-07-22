@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {sendMessage} from '../actions/messageAction';
 
-export default class SendMessageForm extends Component {
+class SendMessageForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -28,7 +30,7 @@ export default class SendMessageForm extends Component {
 		return (
 			<form className='send-message-form'  onSubmit={this.handleSubmit} >
 				<input 
-				disabled={this.props.disabled} 
+				// disabled={this.props.disabled} 
 				value={this.state.message} 
 				placeholder="text" 
 				type="text" 
@@ -38,3 +40,8 @@ export default class SendMessageForm extends Component {
 		);
 	}
 }
+const mapStateToPrps = state => ({
+	message: state.message.message
+})
+
+export default connect(null, {sendMessage})(SendMessageForm)

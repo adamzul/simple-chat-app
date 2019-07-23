@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {createRoom, getRooms} from '../actions/roomAction';
 
-export default class NewRoomForm extends Component {
+class NewRoomForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -19,9 +21,8 @@ export default class NewRoomForm extends Component {
 
 	handleSubmit(e){
 		e.preventDefault();
-		console.log(this.state.roomName);
-
 		this.props.createRoom(this.state.roomName);
+		this.props.getRooms();
 		this.setState({
 			roomName: ''
 		});
@@ -38,3 +39,7 @@ export default class NewRoomForm extends Component {
 		);
 	}
 }
+
+
+
+export default connect(null, {createRoom, getRooms})(NewRoomForm);

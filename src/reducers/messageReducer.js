@@ -7,7 +7,6 @@ const initialState = {
 export default function(state = initialState, action){
 	switch(action.type){
 		case GET_MESSAGES:
-		// console.log([...action.payload.messages])
 			state = {
 				...state,
 				messages: [...action.payload.messages]
@@ -22,7 +21,6 @@ export default function(state = initialState, action){
 		case SEND_MESSAGE:
 			state = {
 				...state,
-				// messages: [...action.payload.messages]
 			}
 			return state;
 		default:

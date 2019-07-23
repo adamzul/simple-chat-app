@@ -30,7 +30,7 @@ class SendMessageForm extends Component {
 		return (
 			<form className='send-message-form'  onSubmit={this.handleSubmit} >
 				<input 
-				// disabled={this.props.disabled} 
+				disabled={this.props.currentRoomId == ''} 
 				value={this.state.message} 
 				placeholder="text" 
 				type="text" 
@@ -40,8 +40,9 @@ class SendMessageForm extends Component {
 		);
 	}
 }
-const mapStateToPrps = state => ({
-	message: state.message.message
-})
+const mapStateToProps = state => ({
+	message: state.message.message,
+	currentRoomId: state.room.currentRoomId
+});
 
-export default connect(null, {sendMessage})(SendMessageForm)
+export default connect(mapStateToProps, {sendMessage})(SendMessageForm)

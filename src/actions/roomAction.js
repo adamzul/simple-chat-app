@@ -1,4 +1,4 @@
-import {GET_ROOMS, SUBSCRIBE_ROOM} from './types';
+import {GET_ROOMS, SUBSCRIBE_ROOM, SET_CURRENT_ROOM_ID, CREATE_ROOM} from './types';
 
 
 export function getRooms(){
@@ -17,6 +17,31 @@ export function getRooms(){
   }
 }
 
+export function setCurrentRoomId(id){
+  return function(dispatch){
+    return dispatch({
+      type: SET_CURRENT_ROOM_ID,
+      payload: {
+        roomId: id
+      }
+    })
+  }
+}
+
+export function createRoom(name){
+  return function(dispatch, getState){
+    getState().user.currentUser.createRoom({
+      name
+    })
+    .then(() => {
+      return dispatch({
+        type: CREATE_ROOM
+      });
+    })
+    // .then(room => this.subscribeToRoom(room.id))
+    .catch(err => console.log("error create room"));
+  }
+}
 
 // export function subscribeRoom(roomId){
 //   return function(dispatch, getState){

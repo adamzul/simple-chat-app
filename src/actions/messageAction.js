@@ -19,14 +19,6 @@ export function getMessages(roomId){
         }
       }
     })
-    .then(room => {
-      dispatch({
-        type: SET_CURRENT_ROOM_ID,
-        payload: {
-          currentRoomId: roomId
-        }
-      })
-    })
     .catch(err => console(err));
   }
 }
@@ -41,14 +33,14 @@ export function cleanMessage(){
 
 export function sendMessage(text){
   return function(dispatch, getState){
-    return getState().user.currentUser.sendMessage({
-      text
-    });
-    return dispatch({
-      type: SEND_MESSAGE,
-      // payload: {
-      //   text
-      // }
+    getState().user.currentUser.sendMessage({
+      text,
+      roomId: getState().room.currentRoomId
+    })
+    .then(() => {
+      dispatch({
+        type: SEND_MESSAGE
+      })
     })
   }
 	

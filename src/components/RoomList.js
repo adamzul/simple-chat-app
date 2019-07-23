@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import roomAction from '../actions/roomAction';
+import {setCurrentRoomId} from '../actions/roomAction';
 import {getMessages, cleanMessage} from '../actions/messageAction';
 
 class RoomList extends Component {
@@ -12,10 +12,11 @@ class RoomList extends Component {
 				<ul>
 					<h3>your rooms</h3>
 					{orderedRooms.map(room => {
-						const active = this.props.roomId === room.id ? "active" : "";
+						const active = this.props.currentRoomId === room.id ? "active" : "";
 						return (
 							<li key={room.id} className={"room " + active}>
 								<a onClick={() => {
+									this.props.setCurrentRoomId(room.id);
 									this.props.cleanMessage();
 									this.props.getMessages(room.id);
 								}} href="#"> # {room.name}</a>
@@ -29,7 +30,8 @@ class RoomList extends Component {
 }
 
 const mapStateToProps = state => ({
-	rooms: [...state.room.joinableRooms, ...state.room.joinedRooms]
+	rooms: [...state.room.joinableRooms, ...state.room.joinedRooms],
+	currentRoomId: state.room.currentRoomId
 })
 
-export default connect(mapStateToProps, {getMessages, cleanMessage})(RoomList);
+export default connect(mapStateToProps, {getMessages, cleanMessage, setCurrentRoomId})(RoomList);

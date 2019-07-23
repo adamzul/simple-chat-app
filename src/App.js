@@ -105,11 +105,11 @@ class App extends React.Component {
         <Init />
           <RoomList />
           <MessageList />
+          <NewRoomForm  />
           <SendMessageForm />
-        {/*
-        <NewRoomForm createRoom={this.createRoom} />
+        {
         
-      */}
+      }
       </div>
       </Provider>
     );

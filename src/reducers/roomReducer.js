@@ -1,4 +1,4 @@
-import {GET_ROOMS, POST_ROOM, SUBSCRIBE_ROOM, SET_CURRENT_ROOM_ID} from '../actions/types';
+import {GET_ROOMS, POST_ROOM, SUBSCRIBE_ROOM, SET_CURRENT_ROOM_ID, CREATE_ROOM} from '../actions/types';
 
 const initialState = {
 	joinableRooms: [],
@@ -10,6 +10,7 @@ export default function(state = initialState, action){
 	switch(action.type){
 		case GET_ROOMS:
 			state = {
+				...state,
 				joinableRooms: action.joinableRooms,
         		joinedRooms: action.joinedRooms
 			}
@@ -27,6 +28,8 @@ export default function(state = initialState, action){
 				...state,
 				currentRoomId: action.payload.roomId
 			}
+		case CREATE_ROOM:
+			return state;
 		default:
 			return state;
 	}
